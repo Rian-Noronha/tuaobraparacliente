@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1052598301707",
+    "project_id": "tuaobra-para-cliente",
+    "storage_bucket": "tuaobra-para-cliente.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052598301707:android:5f629aff52735f98fbc30e",
+        "android_client_info": {
+          "package_name": "com.rn.tuaobraparacliente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052598301707-u0huo7adotiigb1e5nnhprjq61nhk81o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rn.tuaobraparacliente",
+            "certificate_hash": "902f748226989a57bf640cc744baeda1585beffc"
+          }
+        },
+        {
+          "client_id": "1052598301707-kev2uqu7bre8mp05hhqs315ue94mvg03.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-dTBa3KUKMeJ0EGrj_jCVRD6A_1iZmAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052598301707-kev2uqu7bre8mp05hhqs315ue94mvg03.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
