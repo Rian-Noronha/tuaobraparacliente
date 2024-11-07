@@ -1,10 +1,10 @@
-package com.rn.tuaobraparacliente.ui.notifications
+package com.rn.tuaobraparacliente.ui.casa
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class CasaViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is notifications Fragment"
