@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.rn.tuaobraparacliente.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_cadastroDemandaFragment"
+            app:destination="@id/cadastroDemandaFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -22,4 +26,12 @@
         android:name="com.rn.tuaobraparacliente.ui.casa.CasaFragment"
         android:label="@string/title_casa"
         tools:layout="@layout/fragment_casa" />
+
+    <fragment
+        android:id="@+id/cadastroDemandaFragment"
+        android:name="com.rn.tuaobraparacliente.ui.home.CadastroDemandaFragment"
+        android:label="Cadastro de Demanda"
+        tools:layout="@layout/fragment_cadastro_demanda"
+        />
+
 </navigation>

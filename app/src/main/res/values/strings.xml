@@ -36,4 +36,14 @@
     <string name="txt_ir_a_tela_cadastro">Não tem conta? Cadastre-se</string>
     <string name="txt_hint_password">Senha</string>
     <string name="descricao_float">Botão para adicionar nova demanda</string>
+
+    <!--Tela de cadastro demanda-->
+    <string name="titulo_cadastro_demanda">Cadastro de Demanda</string>
+    <string name="hint_detalhes">Detalhes</string>
+    <string name="hint_trabalho_ser_feito">Trabalho a ser feito</string>
+    <string name="hint_data_publicacao">Data Publicação</string>
+   <string name="btn_cadastrar_demanda">Cadastrar Demanda</string>
+
+
+
 </resources>
