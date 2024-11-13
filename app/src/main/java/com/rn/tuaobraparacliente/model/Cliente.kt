@@ -1,9 +1,9 @@
 package com.rn.tuaobraparacliente.model
 
 data class Cliente(
-    val id: Long,
-    val nome: String,
+    val id: Long? = null,
+    val nome: String? = null,
     val email: String,
-    val contatoWhatsApp: String,
-    val endereco: Endereco
+    val contatoWhatsApp: String? = null,
+    val endereco: Endereco? = null
 )

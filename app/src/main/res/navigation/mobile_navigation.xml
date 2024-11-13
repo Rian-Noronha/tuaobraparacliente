@@ -32,6 +32,10 @@
         android:name="com.rn.tuaobraparacliente.ui.home.CadastroDemandaFragment"
         android:label="Cadastro de Demanda"
         tools:layout="@layout/fragment_cadastro_demanda"
-        />
+        >
+        <action
+            android:id="@+id/action_cadastroDemandaFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 
 </navigation>
