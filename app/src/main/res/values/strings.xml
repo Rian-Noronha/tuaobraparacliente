@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">TuaObra para Cliente</string>
-    <string name="title_home">Demandar</string>
+    <string name="title_home">Demanda</string>
     <string name="title_demanda">Demanda</string>
+    <string name="title_perfil">Perfil</string>
     <string name="title_casa">Casa</string>
     <string name="titulo_demanda">Demanda em Destaque</string>
     <string name="hint_nome">Nome</string>

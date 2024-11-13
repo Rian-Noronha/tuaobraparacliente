@@ -16,16 +16,16 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.rn.tuaobraparacliente.ui.demanda.DemandaFragment"
-        android:label="@string/title_demanda"
-        tools:layout="@layout/fragment_demanda" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_casa"
         android:name="com.rn.tuaobraparacliente.ui.casa.CasaFragment"
         android:label="@string/title_casa"
         tools:layout="@layout/fragment_casa" />
+
+    <fragment
+        android:id="@+id/navigation_pefil"
+        android:name="com.rn.tuaobraparacliente.ui.perfil.PerfilFragment"
+        android:label="@string/title_perfil"
+        tools:layout="@layout/fragment_perfil" />
 
     <fragment
         android:id="@+id/cadastroDemandaFragment"
