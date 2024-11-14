@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.rn.tuaobraparacliente.R
 import com.rn.tuaobraparacliente.databinding.FragmentCadastroDemandaBinding
 import com.rn.tuaobraparacliente.model.Cliente
@@ -25,7 +26,7 @@ class CadastroDemandaFragment : Fragment() {
     private var _binding: FragmentCadastroDemandaBinding? = null
     private val binding get() = _binding!!
     private lateinit var cadastroDemandaViewModel: CadastroDemandaViewModel
-
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +36,7 @@ class CadastroDemandaFragment : Fragment() {
         _binding = FragmentCadastroDemandaBinding.inflate(inflater, container, false)
 
         cadastroDemandaViewModel = ViewModelProvider(this).get(CadastroDemandaViewModel::class.java)
-
+        auth = FirebaseAuth.getInstance()
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
@@ -65,37 +66,46 @@ class CadastroDemandaFragment : Fragment() {
             numero = binding.txtInputNumero.text.toString()
         )
 
-        val cliente = Cliente(
-            email = "paulo.miranda@gmail.com"
-        )
+        val currentUser = auth.currentUser
+        val clienteEmail = currentUser?.email
 
-        val demanda = Demanda(
-            detalhes = binding.txtInputDetalhes.text.toString(),
-            trabalhoSerFeito = binding.txtInputTrabalhoSerFeito.text.toString(),
-            dataPublicacao = binding.txtInputDataPublicacao.text.toString(),
-            endereco = endereco,
-            cliente = cliente
-        )
+        if(clienteEmail != null){
+            val cliente = Cliente(
+                email = clienteEmail
+            )
 
-        RetrofitClient.instance.salvarDemandaCliente(demanda).enqueue(object : Callback<Void>{
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if(response.isSuccessful){
-                    Toast.makeText(context, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.action_cadastroDemandaFragment_to_navigation_home)
-                }else{
-                    Toast.makeText(context, "Erro ao cadastrar: ${response.message()}", Toast.LENGTH_SHORT).show()
-                    Log.i("Rn:", response.toString())
+            val demanda = Demanda(
+                detalhes = binding.txtInputDetalhes.text.toString(),
+                trabalhoSerFeito = binding.txtInputTrabalhoSerFeito.text.toString(),
+                dataPublicacao = binding.txtInputDataPublicacao.text.toString(),
+                endereco = endereco,
+                cliente = cliente
+            )
+
+            RetrofitClient.instance.salvarDemandaCliente(demanda).enqueue(object : Callback<Void>{
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if(response.isSuccessful){
+                        Toast.makeText(context, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_cadastroDemandaFragment_to_navigation_home)
+                    }else{
+                        Toast.makeText(context, "Erro ao cadastrar: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        Log.i("Rn:", response.toString())
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Toast.makeText(context, "Falha na conexão: ${t.message}", Toast.LENGTH_SHORT).show()
-                Log.i("Rian: ", t.message.toString())
-            }
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(context, "Falha na conexão: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Log.i("Rian: ", t.message.toString())
+                }
 
-        })
-
-
+            })
+        }else{
+            Toast.makeText(
+                context,
+                "Erro: Não foi possível obter o email do cliente.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
 

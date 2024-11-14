@@ -28,15 +28,15 @@ class CadastroActivity : AppCompatActivity() {
 
     private fun cadastrarCliente(){
         val endereco = Endereco(
-            cep = binding.edtCEP.toString(),
+            cep = binding.edtCEP.text.toString(),
             nomeLugar = binding.edtNomeLugar.text.toString(),
             numero = binding.edtNumero.text.toString()
         )
 
         val cliente = Cliente(
-            nome = binding.edtNome.toString(),
-            email = binding.edtEmail.toString(),
-            contatoWhatsApp = binding.edtWhatsApp.toString(),
+            nome = binding.edtNome.text.toString(),
+            email = binding.edtEmail.text.toString(),
+            contatoWhatsApp = binding.edtWhatsApp.text.toString(),
             endereco = endereco
         )
 
