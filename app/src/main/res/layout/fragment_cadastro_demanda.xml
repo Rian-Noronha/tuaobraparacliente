@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
-    android:background="@color/white"
+    android:background="@color/colorWhite"
     tools:context=".ui.home.CadastroDemandaFragment">
 
     <LinearLayout
@@ -12,16 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/titulo_cadastro_demanda"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -111,8 +101,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_cadastrar_demanda"
-            android:backgroundTint="@color/black"
-            android:textColor="@color/white"
+            android:backgroundTint="@color/colorOrangeSafety"
+            android:textColor="@color/colorBlack"
             android:layout_marginTop="24dp"
             android:padding="12dp"
             android:textAllCaps="false" />
