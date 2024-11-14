@@ -5,18 +5,9 @@
     <string name="title_perfil">Perfil</string>
     <string name="title_casa">Casa</string>
     <string name="titulo_demanda">Demanda em Destaque</string>
-    <string name="hint_nome">Nome</string>
-    <string name="hint_email">Email</string>
-    <string name="hint_contato_whatsapp">Contato WhatsApp</string>
-    <string name="hint_descricao">Descrição</string>
-    <string name="hint_url_imagem_perfil">URL Imagem Perfil</string>
-    <string name="hint_cep">CEP</string>
-    <string name="hint_nome_lugar">Nome do Lugar</string>
-    <string name="hint_numero">Número</string>
     <string name="btn_cadastrar">Cadastrar</string>
     <string name="btn_ver_detalhes">Ver detalhes</string>>
     <string name="btn_login">Bora</string>
-    <string name="hint_contato">Contato (WhatsApp)</string>
     <string name="text_nao_tem_conta">Não tem uma conta? Cadastre-se aqui!</string>
     <string name="detatlhes_demanda">O que o cliente quer</string>
     <string name="data_publicacao_demanda">Data da publicação</string>
@@ -43,8 +34,20 @@
     <string name="hint_detalhes">Detalhes</string>
     <string name="hint_trabalho_ser_feito">Trabalho a ser feito</string>
     <string name="hint_data_publicacao">Data Publicação</string>
-   <string name="btn_cadastrar_demanda">Cadastrar Demanda</string>
+    <string name="btn_cadastrar_demanda">Cadastrar Demanda</string>
 
+    <!--Tela de cadastro cliente-->
+    <string name="title_cadastro_cliente">Cadastro Cliente</string>
+    <string name="hint_nome">Nome</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_contato_whatsapp">Contato WhatsApp</string>
+    <string name="hint_descricao">Descrição</string>
+    <string name="hint_url_imagem_perfil">URL Imagem Perfil</string>
+    <string name="hint_cep">CEP</string>
+    <string name="hint_nome_lugar">Nome do Lugar</string>
+    <string name="hint_numero">Número</string>
+    <string name="hint_contato">Contato (WhatsApp)</string>
+    <string name="btn_cadastrar_cliente">Me Cadastrar</string>
 
 
 </resources>

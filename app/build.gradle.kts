@@ -91,6 +91,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-process:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation("androidx.activity:activity:1.9.3")
 
     testImplementation("junit:junit:$junit_version")
     androidTestImplementation("androidx.test.ext:junit:$test_junit_version")
