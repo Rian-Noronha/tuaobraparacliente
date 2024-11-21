@@ -6,9 +6,9 @@
     tools:context=".LoginActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayoutLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
@@ -22,6 +22,8 @@
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_mail_black_24dp"
+            android:drawablePadding="5dp"
             android:layout_marginBottom="16dp"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
@@ -32,6 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
+            android:drawableStart="@drawable/ic_password_24dp"
+            android:drawablePadding="5dp"
             android:hint="@string/txt_hint_password"
             android:inputType="textPassword"
             android:minHeight="48dp" />
@@ -47,6 +51,7 @@
             android:id="@+id/btnGoogleSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/googlelogo"
             style="@style/Widget.AppCompat.Button.Colored"
             android:text="@string/button_google_sign_in"
             android:layout_marginTop="16dp" />
@@ -58,8 +63,8 @@
             android:layout_marginTop="32dp"
             android:clickable="true"
             android:focusable="true"
+            android:layout_gravity="center_horizontal"
             android:minHeight="48dp"
-            android:onClick="goToCadastroActivity"
             android:text="@string/txt_ir_a_tela_cadastro"
             android:textColor="@android:color/holo_blue_dark" />
 

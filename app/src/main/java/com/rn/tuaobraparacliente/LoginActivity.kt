@@ -31,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, CadastroActivity::class.java))
         }
 
+
+
     }
 
     private fun initGoogleSignIn() {
