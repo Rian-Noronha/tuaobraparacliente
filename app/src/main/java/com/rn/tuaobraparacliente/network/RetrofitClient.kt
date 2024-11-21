@@ -3,7 +3,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.3.130:8080/api/"
+    private const val BASE_URL = "https://tuaobra-53a3ce60b364.herokuapp.com/api/"
 
     val instance: ApiService by lazy {
         val retrofit = Retrofit.Builder()

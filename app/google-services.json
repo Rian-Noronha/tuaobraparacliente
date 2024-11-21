@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1052598301707-u0huo7adotiigb1e5nnhprjq61nhk81o.apps.googleusercontent.com",
+          "client_id": "1052598301707-ipnuoi0asglc7j7l664181mgdu3iksrc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.rn.tuaobraparacliente",
-            "certificate_hash": "902f748226989a57bf640cc744baeda1585beffc"
+            "certificate_hash": "50595cadb29c1b31a95f5ff1473baa76ce946708"
           }
         },
         {
