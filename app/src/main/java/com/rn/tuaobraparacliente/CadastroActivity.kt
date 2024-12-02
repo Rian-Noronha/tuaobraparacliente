@@ -1,11 +1,11 @@
 package com.rn.tuaobraparacliente
-
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.auth
 import com.rn.tuaobraparacliente.databinding.ActivityCadastroBinding
 import com.rn.tuaobraparacliente.model.Cliente
 import com.rn.tuaobraparacliente.model.Endereco
@@ -20,6 +20,8 @@ class CadastroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        auth = Firebase.auth
+
         binding = ActivityCadastroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -29,39 +31,81 @@ class CadastroActivity : AppCompatActivity() {
 
     }
 
-    private fun cadastrarCliente(){
-        if(validarCampos()){
-            val endereco = Endereco(
-                cep = binding.edtCEP.text.toString(),
-                nomeLugar = binding.edtNomeLugar.text.toString(),
-                numero = binding.edtNumero.text.toString()
-            )
+    private fun cadastrarCliente() {
+        if (validarCampos()) {
+            // Criar usuário no Firebase
+            auth.createUserWithEmailAndPassword(binding.edtEmail.text.toString(), binding.edtSenha.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
 
-            val cliente = Cliente(
-                nome = binding.edtNome.text.toString(),
-                email = binding.edtEmail.text.toString(),
-                contatoWhatsApp = binding.edtWhatsApp.text.toString(),
-                endereco = endereco
-            )
+                        val endereco = Endereco(
+                            cep = binding.edtCEP.text.toString(),
+                            nomeLugar = binding.edtNomeLugar.text.toString(),
+                            numero = binding.edtNumero.text.toString()
+                        )
 
-            RetrofitClient.instance.cadastrarCliente(cliente).enqueue(object : Callback<Void> {
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if(response.isSuccessful){
-                        Toast.makeText(this@CadastroActivity, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
-                        finish()
-                    }else{
-                        Toast.makeText(this@CadastroActivity, "Erro ao cadastrar: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        val currentUser = FirebaseAuth.getInstance().currentUser
+                        val firebaseUid = currentUser?.uid ?: throw IllegalStateException("Usuário não autenticado")
+
+                        val cliente = Cliente(
+                            nome = binding.edtNome.text.toString(),
+                            email = binding.edtEmail.text.toString(),
+                            contatoWhatsApp = binding.edtWhatsApp.text.toString(),
+                            endereco = endereco,
+                            firebaseUid = firebaseUid
+                        )
+
+                        // Enviar cliente ao backend
+                        RetrofitClient.instance.cadastrarCliente(cliente).enqueue(object : Callback<Void> {
+                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                if (response.isSuccessful) {
+                                    // Realiza login automático após o cadastro no backend
+                                    auth.signInWithEmailAndPassword(
+                                        binding.edtEmail.text.toString(),
+                                        binding.edtSenha.text.toString()
+                                    ).addOnCompleteListener { signInTask ->
+                                        if (signInTask.isSuccessful) {
+                                            Log.d("FirebaseUID", "UID do Firebase: $firebaseUid")
+                                            Toast.makeText(
+                                                this@CadastroActivity,
+                                                "Cadastro e login realizados com sucesso!",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            finish()
+                                        } else {
+                                            Toast.makeText(
+                                                this@CadastroActivity,
+                                                "Erro ao realizar login automático.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                } else {
+                                    val errorMessage = when (response.code()) {
+                                        400 -> "Erro nos dados enviados. Por favor, verifique as informações."
+                                        409 -> "E-mail já cadastrado."
+                                        else -> "Erro ao cadastrar: ${response.message()}"
+                                    }
+                                    Toast.makeText(this@CadastroActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
+                                Toast.makeText(
+                                    this@CadastroActivity,
+                                    "Falha na conexão: ${t.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Log.e("CadastroActivity", "Erro: ${t.message}", t)
+                            }
+                        })
+                    } else {
+                        Toast.makeText(this, "Erro ao criar usuário no Firebase: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                     }
                 }
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    Toast.makeText(this@CadastroActivity, "Falha na conexão: ${t.message}", Toast.LENGTH_SHORT).show()
-                    Log.i("Info: ", t.message.toString())
-                }
-
-            })
         }
     }
+
 
 
     private fun validarCamposPreenchidos(): Boolean {
@@ -95,6 +139,4 @@ class CadastroActivity : AppCompatActivity() {
     private fun validarCampos(): Boolean {
         return validarCamposPreenchidos() && validarSenhasIguais()
     }
-
-
 }

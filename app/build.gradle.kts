@@ -61,6 +61,7 @@ val retrofit_version = "2.9.0"
 val gson_version = "2.9.0"
 val core_ktx_version = "1.13.1"
 
+
 dependencies {
     implementation("androidx.core:core-ktx:$core_ktx_version")
     implementation("androidx.appcompat:appcompat:$app_compat_version")

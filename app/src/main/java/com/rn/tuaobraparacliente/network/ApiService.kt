@@ -5,10 +5,15 @@ import com.rn.tuaobraparacliente.model.Demanda
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
+
+    @POST("/api/auth/logincliente")
+    fun autenticar(@Header("Authorization") authorization: String): Call<Cliente>
+
     @POST("/api/demandacliente")
     fun salvarDemandaCliente(@Body demanda: Demanda): Call<Void>
 

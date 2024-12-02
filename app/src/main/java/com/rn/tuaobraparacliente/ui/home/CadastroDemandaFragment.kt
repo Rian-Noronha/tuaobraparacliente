@@ -1,4 +1,5 @@
 package com.rn.tuaobraparacliente.ui.home
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,9 +19,13 @@ import com.rn.tuaobraparacliente.model.Cliente
 import com.rn.tuaobraparacliente.model.Demanda
 import com.rn.tuaobraparacliente.model.Endereco
 import com.rn.tuaobraparacliente.network.RetrofitClient
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
+import java.time.ZoneOffset
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.ZoneId
 
 class CadastroDemandaFragment : Fragment() {
 
@@ -28,6 +34,7 @@ class CadastroDemandaFragment : Fragment() {
     private lateinit var cadastroDemandaViewModel: CadastroDemandaViewModel
     private lateinit var auth: FirebaseAuth
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,6 +66,7 @@ class CadastroDemandaFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun cadastrarDemandaCliente(){
         val endereco = Endereco(
             cep = binding.txtInputCep.text.toString(),
@@ -68,16 +76,18 @@ class CadastroDemandaFragment : Fragment() {
 
         val currentUser = auth.currentUser
         val clienteEmail = currentUser?.email
+        val firebaseUid = currentUser?.uid ?: throw IllegalStateException("Usuário não autenticado")
 
         if(clienteEmail != null){
             val cliente = Cliente(
-                email = clienteEmail
+                email = clienteEmail,
+                firebaseUid = firebaseUid
             )
 
             val demanda = Demanda(
                 detalhes = binding.txtInputDetalhes.text.toString(),
                 trabalhoSerFeito = binding.txtInputTrabalhoSerFeito.text.toString(),
-                dataPublicacao = binding.txtInputDataPublicacao.text.toString(),
+                dataPublicacao = obterDataAtual(),
                 endereco = endereco,
                 cliente = cliente
             )
@@ -107,6 +117,17 @@ class CadastroDemandaFragment : Fragment() {
             ).show()
         }
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun obterDataAtual(): String {
+        val zoneId = ZoneId.of("America/Recife")
+        val dataAtual = ZonedDateTime.now(zoneId)
+        val dataAtualUtc = dataAtual.withZoneSameInstant(ZoneOffset.UTC)
+        return dataAtualUtc.format(DateTimeFormatter.ISO_INSTANT)
+    }
+
+
 
 
     override fun onDestroyView() {
