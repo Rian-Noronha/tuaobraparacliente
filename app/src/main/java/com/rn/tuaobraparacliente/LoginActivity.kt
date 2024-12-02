@@ -39,25 +39,25 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnSignIn.setOnClickListener {
             if (validarCampos()) {
-                // Realiza o login com e-mail e senha
+
                 auth.signInWithEmailAndPassword(
                     binding.editTextEmail.text.toString(),
                     binding.editTextPassword.text.toString()
                 ).addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Obter o usuário atual e o ID Token
+
                         val user = auth.currentUser
                         user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
                             if (tokenTask.isSuccessful) {
-                                // Pega o ID Token
+
                                 val idToken = tokenTask.result?.token
 
-                                // Envia o token para o servidor
+
                                 idToken?.let {
                                     enviarTokenParaServidor(it)
                                 }
 
-                                // Navegar para a próxima tela
+
                                 startActivity(Intent(this, MainActivity::class.java))
                             } else {
                                 Log.e("Firebase", "Falha ao obter o ID Token")
@@ -147,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
     private fun enviarTokenParaServidor(idToken: String) {
         val apiService = RetrofitClient.instance
 
-        // Criar um cabeçalho com o token de autenticação
+
         val call = apiService.autenticar("Bearer $idToken")
 
         call.enqueue(object : Callback<Cliente> {
@@ -157,7 +157,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
                 } else {
-                    // Se o login falhar devido a um token expirado, tente renovar o token
+
                     Log.e("Firebase", "Falha no login: ${idToken}")
                     renovarToken()
                 }
@@ -174,10 +174,10 @@ class LoginActivity : AppCompatActivity() {
         val user = FirebaseAuth.getInstance().currentUser
         user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
             if (tokenTask.isSuccessful) {
-                // Pega o novo ID Token
+
                 val newIdToken = tokenTask.result?.token
 
-                // Envia o novo token para o servidor
+
                 newIdToken?.let {
                     enviarTokenParaServidor(it)
                 }
