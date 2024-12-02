@@ -11,7 +11,7 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @POST("/api/auth/logincliente")
+    @POST("/api/auth/cliente")
     fun autenticar(@Header("Authorization") authorization: String): Call<Cliente>
 
     @POST("/api/demandacliente")
