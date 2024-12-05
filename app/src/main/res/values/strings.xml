@@ -51,5 +51,33 @@
     <string name="hint_contato">Contato (WhatsApp)</string>
     <string name="btn_cadastrar_cliente">Me Cadastrar</string>
 
+    <!--Tela das casas-->
+    <string name="image_perfil_description">Imagem de perfil</string>
+
+
+    <string name="nome_casa_construcao">Nome da Casa de Construção</string>
+
+
+    <string name="descricao_empresa">Descrição da empresa</string>
+
+
+    <string name="horario_funcionamento">Horário de funcionamento: 08:00 - 18:00</string>
+
+
+    <string name="frete_incluso">Frete: Incluso</string>
+
+
+    <string name="email_empresa">Email: contato@empresa.com</string>
+
+
+    <string name="whatsapp_contato">WhatsApp: (11) 98765-4321</string>
+
+
+    <string name="forma_pagamento">Forma de pagamento: Cartão, Boleto</string>
+
+
+    <string name="enviar_orcamento">Enviar Orçamento</string>
+
+
 
 </resources>

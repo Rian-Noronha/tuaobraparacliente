@@ -1,5 +1,6 @@
 package com.rn.tuaobraparacliente.network
 
+import com.rn.tuaobraparacliente.model.CasaConstrucao
 import com.rn.tuaobraparacliente.model.Cliente
 import com.rn.tuaobraparacliente.model.Demanda
 import retrofit2.Call
@@ -13,6 +14,9 @@ interface ApiService {
 
     @POST("/api/auth/cliente")
     fun autenticar(@Header("Authorization") authorization: String): Call<Cliente>
+
+    @GET("/api/casasconstrucao")
+    fun listarCasas(): Call<List<CasaConstrucao>>
 
     @POST("/api/demandacliente")
     fun salvarDemandaCliente(@Body demanda: Demanda): Call<Void>
