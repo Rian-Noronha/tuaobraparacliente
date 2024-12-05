@@ -1,6 +1,6 @@
 package com.rn.tuaobraparacliente.ui.casa
-
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rn.tuaobraparacliente.adapter.CasaConstrucaoAdapter
 import com.rn.tuaobraparacliente.databinding.FragmentCasaBinding
+import com.rn.tuaobraparacliente.model.CasaConstrucao
+import com.rn.tuaobraparacliente.model.Demanda
 
 class CasaFragment : Fragment() {
 
@@ -17,6 +19,8 @@ class CasaFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var casaViewModel: CasaViewModel
     private lateinit var casasAdapter: CasaConstrucaoAdapter
+    private var casaSelecionada: CasaConstrucao? = null
+    private var demandaSelecionada: Demanda? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +49,21 @@ class CasaFragment : Fragment() {
 
     private fun configurarRecyclerView() {
 
-        casasAdapter = CasaConstrucaoAdapter(emptyList())
+        casasAdapter = CasaConstrucaoAdapter(emptyList()) { casa ->
+            casaSelecionada = casa
+            Log.d("Casa em fragment", "${casa}")
+            // Ao clicar na casa, abrir o BottomSheet
+            val bottomSheet = DemandaBottomSheet(casa) { demanda ->
+                demandaSelecionada = demanda
+                // Ao selecionar uma demanda, fazer algo com ela (passar para CasaFragment)
+                // Exemplo: Mostrar um Toast ou realizar algum outro processamento
+                Toast.makeText(context, "Demanda Selecionada: ${demanda.trabalhoSerFeito}", Toast.LENGTH_SHORT).show()
+
+                // Fechar o BottomSheet automaticamente
+            }
+
+            bottomSheet.mostrarBottomSheet(childFragmentManager)
+        }
 
         binding.recyclerViewCasa.layoutManager = LinearLayoutManager(context)
 
@@ -53,9 +71,10 @@ class CasaFragment : Fragment() {
     }
 
 
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

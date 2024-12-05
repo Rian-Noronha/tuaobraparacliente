@@ -7,7 +7,8 @@ import com.rn.tuaobraparacliente.databinding.ItemDemandaBinding
 import com.rn.tuaobraparacliente.model.Demanda
 
 class DemandaAdapter(
-    private var demandas: List<Demanda>
+    private var demandas: List<Demanda>,
+    private val onDemandaClick: (Demanda) -> Unit
 ) : RecyclerView.Adapter<DemandaAdapter.DemandaViewHolder>() {
 
 
@@ -29,13 +30,17 @@ class DemandaAdapter(
     }
 
 
-    class DemandaViewHolder(private val binding: ItemDemandaBinding) :
+   inner class DemandaViewHolder(private val binding: ItemDemandaBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(demanda: Demanda) {
             binding.txtTrabalhoASerFeito.text = demanda.detalhes
             binding.txtTituloDemanda.text = demanda.trabalhoSerFeito
             binding.txtLocalizacao.text = demanda.endereco.cep
             binding.txtHorarioPublicacao.text = formatarData(demanda.dataPublicacao)
+
+            binding.root.setOnClickListener {
+                onDemandaClick(demanda)
+            }
         }
 
 

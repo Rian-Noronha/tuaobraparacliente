@@ -8,11 +8,12 @@ import com.rn.tuaobraparacliente.databinding.ItemCasaBinding
 import com.rn.tuaobraparacliente.model.CasaConstrucao
 
 class CasaConstrucaoAdapter(
-    private var casas: List<CasaConstrucao>
+    private var casas: List<CasaConstrucao>,
+    private val onItemClick: (CasaConstrucao) -> Unit
 ) : RecyclerView.Adapter<CasaConstrucaoAdapter.CasaConstrucaoViewHolder>() {
 
 
-    class CasaConstrucaoViewHolder(private val binding: ItemCasaBinding) :
+    inner class CasaConstrucaoViewHolder(private val binding: ItemCasaBinding, ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(casaConstrucao: CasaConstrucao) {
@@ -23,6 +24,10 @@ class CasaConstrucaoAdapter(
             binding.textFrete.text = casaConstrucao.frete
             binding.textWhatsApp.text = casaConstrucao.contatoWhatsApp
             binding.textFormaPagamento.text = casaConstrucao.formaPagamento
+
+            binding.btnEnviarOrcamento.setOnClickListener{
+                onItemClick(casaConstrucao)
+            }
         }
 
     }

@@ -8,6 +8,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -26,4 +27,10 @@ interface ApiService {
 
     @GET("/api/demandascliente/email/{email}")
     fun listarDemandasCliente(@Path("email") email: String): Call<List<Demanda>>
+
+    @POST("/api/casaconstrucao/{casaId}/cliente/email/{email}")
+    fun vincularCasaCliente(@Path("casaId") casaId: Long, @Path("email") email: String): Call<Void>
+
+    @PUT("/api/demanda/{id}")
+    fun atualizarDemanda(@Path("id") demandaId: Long, @Body demanda: Demanda): Call<Demanda>
 }

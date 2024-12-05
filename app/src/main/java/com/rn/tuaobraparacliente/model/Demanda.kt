@@ -6,5 +6,6 @@ data class Demanda(
     val trabalhoSerFeito: String,
     val dataPublicacao: String,
     val endereco: Endereco,
-    val cliente: Cliente
+    val cliente: Cliente,
+    var urlOrcamento: String? = null
 )
