@@ -33,7 +33,6 @@ class CadastroActivity : AppCompatActivity() {
 
     private fun cadastrarCliente() {
         if (validarCampos()) {
-            // Criar usuário no Firebase
             auth.createUserWithEmailAndPassword(binding.edtEmail.text.toString(), binding.edtSenha.text.toString())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -51,21 +50,18 @@ class CadastroActivity : AppCompatActivity() {
                             nome = binding.edtNome.text.toString(),
                             email = binding.edtEmail.text.toString(),
                             contatoWhatsApp = binding.edtWhatsApp.text.toString(),
-                            endereco = endereco,
-                            firebaseUid = firebaseUid
+                            endereco = endereco
                         )
 
-                        // Enviar cliente ao backend
+
                         RetrofitClient.instance.cadastrarCliente(cliente).enqueue(object : Callback<Void> {
                             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                 if (response.isSuccessful) {
-                                    // Realiza login automático após o cadastro no backend
                                     auth.signInWithEmailAndPassword(
                                         binding.edtEmail.text.toString(),
                                         binding.edtSenha.text.toString()
                                     ).addOnCompleteListener { signInTask ->
                                         if (signInTask.isSuccessful) {
-                                            Log.d("FirebaseUID", "UID do Firebase: $firebaseUid")
                                             Toast.makeText(
                                                 this@CadastroActivity,
                                                 "Cadastro e login realizados com sucesso!",

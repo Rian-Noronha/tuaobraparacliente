@@ -76,12 +76,10 @@ class CadastroDemandaFragment : Fragment() {
 
         val currentUser = auth.currentUser
         val clienteEmail = currentUser?.email
-        val firebaseUid = currentUser?.uid ?: throw IllegalStateException("Usuário não autenticado")
 
         if(clienteEmail != null){
             val cliente = Cliente(
-                email = clienteEmail,
-                firebaseUid = firebaseUid
+                email = clienteEmail
             )
 
             val demanda = Demanda(

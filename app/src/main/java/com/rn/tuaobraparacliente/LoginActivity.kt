@@ -14,11 +14,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
 import com.rn.tuaobraparacliente.databinding.ActivityLoginBinding
-import com.rn.tuaobraparacliente.model.Cliente
-import com.rn.tuaobraparacliente.network.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -45,24 +40,7 @@ class LoginActivity : AppCompatActivity() {
                     binding.editTextPassword.text.toString()
                 ).addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-
-                        val user = auth.currentUser
-                        user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
-                            if (tokenTask.isSuccessful) {
-
-                                val idToken = tokenTask.result?.token
-
-
-                                idToken?.let {
-                                    enviarTokenParaServidor(it)
-                                }
-
-
-                                startActivity(Intent(this, MainActivity::class.java))
-                            } else {
-                                Log.e("Firebase", "Falha ao obter o ID Token")
-                            }
-                        }
+                        startActivity(Intent(this, MainActivity::class.java))
                     } else {
                         Log.w("EmailPassowrdFailure", "signInWithEmail:failure", task.exception)
                         Toast.makeText(
@@ -123,10 +101,6 @@ class LoginActivity : AppCompatActivity() {
         fbAuth.signInWithCredential(credential)
             .addOnCompleteListener(this){ task ->
                 if(task.isSuccessful){
-                    val idToken = acct.idToken
-
-                    idToken?.let{enviarTokenParaServidor(it)}
-
                     finish()
                     startActivity(Intent(this, MainActivity::class.java))
                 }else{
@@ -143,52 +117,6 @@ class LoginActivity : AppCompatActivity() {
         return binding.editTextEmail.text.toString().isNotEmpty()
                 && binding.editTextPassword.text.toString().isNotEmpty()
     }
-
-    private fun enviarTokenParaServidor(idToken: String) {
-        val apiService = RetrofitClient.instance
-
-
-        val call = apiService.autenticar("Bearer $idToken")
-
-        call.enqueue(object : Callback<Cliente> {
-            override fun onResponse(call: Call<Cliente>, response: Response<Cliente>) {
-                if (response.isSuccessful) {
-                    Log.d("Firebase", "Login realizado com sucesso: ${response.body()}")
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                    finish()
-                } else {
-
-                    Log.e("Firebase", "Falha no login: ${idToken}")
-                    renovarToken()
-                }
-            }
-
-            override fun onFailure(call: Call<Cliente>, t: Throwable) {
-                Log.e("Firebase", "Erro ao autenticar no servidor", t)
-                Toast.makeText(this@LoginActivity, "Erro ao conectar ao servidor.", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun renovarToken() {
-        val user = FirebaseAuth.getInstance().currentUser
-        user?.getIdToken(true)?.addOnCompleteListener { tokenTask ->
-            if (tokenTask.isSuccessful) {
-
-                val newIdToken = tokenTask.result?.token
-
-
-                newIdToken?.let {
-                    enviarTokenParaServidor(it)
-                }
-            } else {
-                Log.e("Firebase", "Falha ao renovar o ID Token")
-            }
-        }
-    }
-
-
-
 
     companion object {
         const val RC_GOOGLE_SIGN_IN = 1
