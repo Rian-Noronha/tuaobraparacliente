@@ -21,9 +21,13 @@ interface ApiService {
     @POST("/api/cliente")
     fun cadastrarCliente(@Body cliente: Cliente): Call<Void>
 
+    @POST("/api/casaconstrucao/{casaId}/{demandaId}/{emailcliente}")
+    fun vincularCasaCliente(@Path("casaId") casaId: Long, @Path("demandaId") demandaId: Long, @Path("emailcliente") emailCliente: String): Call<Void>
+
     @GET("/api/demandascliente/email/{email}")
     fun listarDemandasCliente(@Path("email") email: String): Call<List<Demanda>>
 
     @PUT("/api/demanda/{id}/{email}")
     fun atualizarDemanda(@Path("id") demandaId: Long, @Path("email") email: String, @Body demanda: Demanda): Call<Demanda>
+
 }

@@ -105,12 +105,16 @@ class CasaFragment : Fragment() {
                         .observe(viewLifecycleOwner) { sucesso ->
                             Log.e("Demanda", "Demanda selecionada ${demanda}")
                             if (sucesso) {
-                                Toast.makeText(context, "Demanda atualizada com sucesso!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "Demanda atualizada com sucesso ${emailCliente.toString()}!", Toast.LENGTH_SHORT).show()
+                                casaViewModel.vincularCasaCliente(casaSelecionada!!.id!!, demandaSelecionada!!.id!!, emailCliente.toString())
+
                             } else {
                                 Toast.makeText(context, "Erro ao atualizar demanda.", Toast.LENGTH_SHORT).show()
                             }
                         }
                 }
+
+
             }
         }.addOnFailureListener { exception ->
             Log.e("FirebaseStorage", "Erro ao enviar imagem", exception)

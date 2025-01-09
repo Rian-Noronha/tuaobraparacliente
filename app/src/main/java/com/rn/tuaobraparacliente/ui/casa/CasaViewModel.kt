@@ -74,5 +74,24 @@ class CasaViewModel : ViewModel() {
 
         return resultado
     }
+    
+    fun vincularCasaCliente(casaId: Long, demandaId: Long, emailCliente: String){
+        RetrofitClient.instance.vincularCasaCliente(casaId, demandaId, emailCliente).enqueue(object : Callback<Void>{
+            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+               if(response.isSuccessful){
+                   Log.i("Vincular casa cliente", "CasaCliente ${casaId} e ${demandaId} e ${emailCliente} vinculados.")
+               }else {
+                   _error.value = "Erro ao vincular: ${response.message()}"
+                   Log.e("Erro ao vincular", "Erro: ${response.message()}")
+               }
+            }
+
+            override fun onFailure(call: Call<Void>, t: Throwable) {
+                _error.value = "Falha de conexão: ${t.message}"
+                Log.e("Vincular casa cliente", "Falha: ${t.message}")
+            }
+
+        })
+    }
 
 }
