@@ -43,33 +43,4 @@ class HomeViewModel : ViewModel() {
             })
     }
 
-
-    fun atualizarDemandaComImagem(demandaId: Long, demanda: Demanda): LiveData<Boolean> {
-        val resultado = MutableLiveData<Boolean>()
-
-
-        RetrofitClient.instance.atualizarDemanda(demandaId, demanda)
-            .enqueue(object : Callback<Demanda> {
-                override fun onResponse(call: Call<Demanda>, response: Response<Demanda>) {
-                    if (response.isSuccessful) {
-                        resultado.value = true
-                        Log.i("Atualizar Demanda", "Demanda $demandaId atualizada com sucesso.")
-                    } else {
-                        resultado.value = false
-                        _error.value = "Erro ao atualizar demanda: ${response.message()}"
-                        Log.e("Atualizar Demanda", "Erro: ${response.message()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<Demanda>, t: Throwable) {
-                    resultado.value = false
-                    _error.value = "Falha de conexão: ${t.message}"
-                    Log.e("Atualizar Demanda", "Falha: ${t.message}")
-                }
-
-            })
-
-        return resultado
-    }
-
 }

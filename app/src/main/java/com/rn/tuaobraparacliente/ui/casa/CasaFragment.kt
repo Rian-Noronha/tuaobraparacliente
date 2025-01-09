@@ -1,4 +1,5 @@
 package com.rn.tuaobraparacliente.ui.casa
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.runtime.currentComposer
 
 class CasaFragment : Fragment() {
 
@@ -50,13 +52,11 @@ class CasaFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         casaViewModel = ViewModelProvider(this).get(CasaViewModel::class.java)
 
-        val currentUser = auth.currentUser
         configurarRecyclerView()
 
         casaViewModel.casas.observe(viewLifecycleOwner) { casas ->
             casasAdapter.updateCasas(casas)
         }
-
 
         casaViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
@@ -67,25 +67,17 @@ class CasaFragment : Fragment() {
         return binding.root
     }
 
-
     private fun configurarRecyclerView() {
-
         casasAdapter = CasaConstrucaoAdapter(emptyList()) { casa ->
             casaSelecionada = casa
-            val currentUser = auth.currentUser
-            val email = currentUser?.email
             val bottomSheet = DemandaBottomSheet(casa) { demanda ->
                 demandaSelecionada = demanda
                 abrirGaleria()
             }
-
-
-
             bottomSheet.mostrarBottomSheet(childFragmentManager)
         }
 
         binding.recyclerViewCasa.layoutManager = LinearLayoutManager(context)
-
         binding.recyclerViewCasa.adapter = casasAdapter
     }
 
@@ -105,15 +97,26 @@ class CasaFragment : Fragment() {
         uploadTask.addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri ->
                 Log.d("FirebaseStorage", "Imagem enviada com sucesso: $uri")
-                Toast.makeText(context, "Imagem enviada com sucesso!", Toast.LENGTH_SHORT).show()
+                demandaSelecionada?.urlOrcamento = uri.toString()
+                val currentUser = auth.currentUser
+                val emailCliente = currentUser?.email
+                demandaSelecionada?.let { demanda ->
+                    casaViewModel.atualizarDemandaComImagem(demanda.id!!,  emailCliente.toString(), demanda)
+                        .observe(viewLifecycleOwner) { sucesso ->
+                            Log.e("Demanda", "Demanda selecionada ${demanda}")
+                            if (sucesso) {
+                                Toast.makeText(context, "Demanda atualizada com sucesso!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(context, "Erro ao atualizar demanda.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                }
             }
         }.addOnFailureListener { exception ->
             Log.e("FirebaseStorage", "Erro ao enviar imagem", exception)
             Toast.makeText(context, "Erro ao enviar imagem: ${exception.message}", Toast.LENGTH_SHORT).show()
         }
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

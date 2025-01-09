@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rn.tuaobraparacliente.model.CasaConstrucao
+import com.rn.tuaobraparacliente.model.Demanda
 import com.rn.tuaobraparacliente.network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -45,4 +46,33 @@ class CasaViewModel : ViewModel() {
 
         })
     }
+
+    fun atualizarDemandaComImagem(demandaId: Long, emailCliente: String, demanda: Demanda): LiveData<Boolean> {
+        val resultado = MutableLiveData<Boolean>()
+
+
+        RetrofitClient.instance.atualizarDemanda(demandaId, emailCliente, demanda)
+            .enqueue(object : Callback<Demanda> {
+                override fun onResponse(call: Call<Demanda>, response: Response<Demanda>) {
+                    if (response.isSuccessful) {
+                        resultado.value = true
+                        Log.i("Atualizar Demanda", "Demanda $demandaId atualizada com sucesso.")
+                    } else {
+                        resultado.value = false
+                        _error.value = "Erro ao atualizar demanda: ${response.message()}"
+                        Log.e("Atualizar Demanda", "Erro: ${response.message()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<Demanda>, t: Throwable) {
+                    resultado.value = false
+                    _error.value = "Falha de conexão: ${t.message}"
+                    Log.e("Atualizar Demanda", "Falha: ${t.message}")
+                }
+
+            })
+
+        return resultado
+    }
+
 }

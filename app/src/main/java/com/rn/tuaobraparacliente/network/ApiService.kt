@@ -24,6 +24,6 @@ interface ApiService {
     @GET("/api/demandascliente/email/{email}")
     fun listarDemandasCliente(@Path("email") email: String): Call<List<Demanda>>
 
-    @PUT("/api/demanda/{id}")
-    fun atualizarDemanda(@Path("id") demandaId: Long, @Body demanda: Demanda): Call<Demanda>
+    @PUT("/api/demanda/{id}/{email}")
+    fun atualizarDemanda(@Path("id") demandaId: Long, @Path("email") email: String, @Body demanda: Demanda): Call<Demanda>
 }
