@@ -23,7 +23,6 @@ class DemandaBottomSheet(
     private lateinit var binding: BottomSheetDemandasBinding
     private lateinit var demandasAdapter: DemandaAdapter
     private val homeViewModel: HomeViewModel by viewModels()
-    private val casaViewModel: CasaViewModel by viewModels()
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -33,9 +32,6 @@ class DemandaBottomSheet(
     ): View? {
         binding = BottomSheetDemandasBinding.inflate(inflater, container, false)
         auth = FirebaseAuth.getInstance()
-
-        Log.d("Casa em bottom sheet", "Casa selecionada: ${casa.nome}")
-
         configurarRecyclerView()
 
         val currentUser = auth.currentUser
