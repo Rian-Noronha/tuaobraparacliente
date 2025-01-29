@@ -9,5 +9,6 @@ data class CasaConstrucao(
     val frete: String,
     val email: String,
     val contatoWhatsApp: String,
-    val formaPagamento: String
+    val senha: String? = null,
+    val endereco: Endereco? = null
 )

@@ -23,7 +23,6 @@ class CasaConstrucaoAdapter(
             binding.textEmail.text = casaConstrucao.email
             binding.textFrete.text = casaConstrucao.frete
             binding.textWhatsApp.text = casaConstrucao.contatoWhatsApp
-            binding.textFormaPagamento.text = casaConstrucao.formaPagamento
 
             binding.btnEnviarOrcamento.setOnClickListener{
                 onItemClick(casaConstrucao)
