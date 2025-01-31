@@ -34,7 +34,7 @@ class CasaViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     _casas.value = response.body() ?: emptyList()
                 } else {
-                    _error.value = "Erro ao buscar demandas: ${response.message()}"
+                    _error.value = "Erro ao buscar casas: ${response.message()}"
                 }
             }
 

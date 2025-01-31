@@ -10,5 +10,6 @@ data class CasaConstrucao(
     val email: String,
     val contatoWhatsApp: String,
     val senha: String? = null,
-    val endereco: Endereco? = null
+    val endereco: Endereco? = null,
+    val demandas: List<Demanda>? = null
 )

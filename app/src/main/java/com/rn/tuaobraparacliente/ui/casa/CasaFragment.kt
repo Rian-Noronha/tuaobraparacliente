@@ -19,7 +19,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.runtime.currentComposer
 
 class CasaFragment : Fragment() {
 
